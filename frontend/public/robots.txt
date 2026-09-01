@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /login
+Disallow: /register
+Disallow: /tickets
+Disallow: /queue
+Disallow: /dashboard
+Disallow: /admin
+
+Sitemap: http://helpdesk.tryasp.net/sitemap.xml

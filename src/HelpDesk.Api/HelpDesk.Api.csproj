@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>0fb7598f-dc89-4029-8482-ca3dba5674cb</UserSecretsId>
+  </PropertyGroup>
+
+  <!-- Slim publish handled repo-wide by Directory.Build.props (no PDBs in Release).
+       appsettings.Development.json stays dev-only. -->
+  <ItemGroup>
+    <Content Update="appsettings.Development.json" CopyToPublishDirectory="Never" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HelpDesk.Infrastructure\HelpDesk.Infrastructure.csproj" />
+    <ProjectReference Include="..\HelpDesk.Application\HelpDesk.Application.csproj" />
+  </ItemGroup>
+
+  <Target Name="SetupUserSecrets" BeforeTargets="Build">
+    <Exec Command="dotnet user-secrets set &quot;ConnectionStrings:HelpDeskDb&quot; &quot;Server=(localdb)\MSSQLLocalDB;Database=HelpDeskDb;Trusted_Connection=True;MultipleActiveResultSets=true&quot;" ContinueOnError="true" />
+    <Exec Command="dotnet user-secrets set &quot;Jwt:Secret&quot; &quot;at-least-32-characters-long-secret-change-me-1234567890&quot;" ContinueOnError="true" />
+    <Exec Command="dotnet user-secrets set &quot;Seed:AdminPassword&quot; &quot;HelpDesk@123&quot;" ContinueOnError="true" />
+  </Target>
+
+  <!-- Builds the React SPA and publishes it into wwwroot (skip with -p:SpaBuild=false). -->
+  <PropertyGroup>
+    <SpaDir>$(MSBuildProjectDirectory)\..\..\frontend</SpaDir>
+    <SpaBuild Condition="'$(SpaBuild)' == ''">true</SpaBuild>
+  </PropertyGroup>
+  <Target Name="BuildSpa" BeforeTargets="ComputeFilesToPublish" Condition="'$(SpaBuild)' == 'true' and Exists('$(SpaDir)\package.json')">
+    <Message Importance="high" Text="Building React frontend (npm run build)..." />
+    <Exec Command="npm run build" WorkingDirectory="$(SpaDir)" />
+    <ItemGroup>
+      <SpaOutput Include="$(SpaDir)\dist\**\*.*" />
+    </ItemGroup>
+    <!-- Copy into the project's wwwroot, then re-add Content items (the default
+         wwwroot glob was computed at evaluation time, before the SPA build ran). -->
+    <Copy SourceFiles="@(SpaOutput)" DestinationFiles="@(SpaOutput->'$(MSBuildProjectDirectory)\wwwroot\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <ItemGroup>
+      <Content Remove="wwwroot\**\*.*" />
+      <Content Include="wwwroot\**\*.*" CopyToPublishDirectory="PreserveNewest" />
+    </ItemGroup>
+  </Target>
+
+</Project>

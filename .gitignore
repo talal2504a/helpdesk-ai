@@ -1,0 +1,28 @@
+bin/
+obj/
+node_modules/
+*.user
+secrets.json
+.env
+.env.production
+deploy/**/.env.production
+# SPA build output copied into API wwwroot at publish time
+src/HelpDesk.Api/wwwroot/
+publish/
+frontend/dist/
+# Real production secrets (use appsettings.Production.template.json as base)
+src/HelpDesk.Api/appsettings.Production.json
+# Local FTP deploy helpers (contain real credentials) + upload archives
+ftp-*.ps1
+helpdesk-upload.zip
+
+uploads/
+dist/
+.vs/
+migrations-backup/
+.vscode/
+
+*.log
+build-*.txt
+run-backend.cmd
+

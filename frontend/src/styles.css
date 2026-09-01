@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f9f9ff;
+  --card: #ffffff;
+  --border: #c7c4d8;
+  --txt: #111c2d;
+  --muted: #464555;
+  --accent: #3525cd;
+  --accent-container: #4f46e5;
+  --surface: #f9f9ff;
+  --surface-container: #e7eeff;
+  --surface-container-low: #f0f3ff;
+  --surface-container-high: #dee8ff;
+  --surface-container-lowest: #ffffff;
+  --on-surface: #111c2d;
+  --on-surface-variant: #464555;
+  --outline-variant: #c7c4d8;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--txt);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Mobile responsiveness ---------- */
+@media (max-width: 640px) {
+  /* Prevent iOS Safari from zooming in when an input is focused */
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+
+  /* Comfortable tap targets */
+  button, a, label, select, input[type="checkbox"] {
+    min-height: 36px;
+  }
+
+  /* Tables scroll smoothly inside their overflow containers */
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+.material-symbols-outlined.fill {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.msg-scroll::-webkit-scrollbar { width: 6px; }
+.msg-scroll::-webkit-scrollbar-track { background: transparent; }
+.msg-scroll::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.error {
+  background: #ffdad6;
+  color: #93000a;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 12px 0;
+  font-size: 14px;
+}
+
+/* ---------- Cute animations ---------- */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes popIn { 0% { opacity: 0; transform: scale(.85); } 65% { transform: scale(1.04); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes floaty { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-4px) rotate(-2deg); } }
+@keyframes glowPulse { 0% { box-shadow: 0 0 0 0 rgba(53,37,205,.35); } 70% { box-shadow: 0 0 0 8px rgba(53,37,205,0); } 100% { box-shadow: 0 0 0 0 rgba(53,37,205,0); } }
+@keyframes wiggle { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
+
+.anim-fade-in   { animation: fadeIn .35s ease both; }
+.anim-slide-up  { animation: slideUp .3s ease both; }
+.anim-slide-down{ animation: slideDown .22s ease both; }
+.anim-pop       { animation: popIn .28s cubic-bezier(.34, 1.56, .64, 1) both; }
+.anim-floaty    { animation: floaty 2.5s ease-in-out infinite; }
+.anim-glow      { animation: glowPulse 2s ease-out infinite; }
+.anim-wiggle-hover:hover .material-symbols-outlined { animation: wiggle .4s ease; }
+
+/* Cards lift on hover */
+.hover-lift { transition: transform .2s ease, box-shadow .2s ease; }
+.hover-lift:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(30, 41, 59, .12); }
+
+/* Every button gives a tiny press bounce */
+button { transition: transform .12s ease; }
+button:active:not(:disabled) { transform: scale(.95); }
+
+/* Respect users who prefer no motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

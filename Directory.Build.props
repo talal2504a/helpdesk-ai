@@ -1,0 +1,7 @@
+<Project>
+  <!-- Repo-wide: Release builds me PDB symbols nahi bante (slim publish output). -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+</Project>
