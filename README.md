@@ -2,7 +2,7 @@
 
 HelpDesk is a production-style customer support / ticketing platform built with **ASP.NET Core 8 Web API** and a **React (Vite)** frontend.
 
-Live site: http://helpdesk.tryasp.net
+Live site: https://helpdesk.tryasp.net/login
 
 It is designed for:
 - customer support teams
